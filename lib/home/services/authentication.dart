@@ -10,7 +10,7 @@ class AuthenticationService {
   }
 
   Future<String?> authenticateUser(
-      final String? username, final String password) async {
+      final String? username, final String? password) async {
     final success = _users.values.any((element) =>
         element.username == username && element.password == password);
     if (success) {

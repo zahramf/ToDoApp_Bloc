@@ -5,9 +5,15 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeInitial extends HomeState {
-  final bool? success;
-
-  HomeInitial({this.success});
+  HomeInitial();
   @override
-  List<Object?> get props => [success];
+  List<Object?> get props => [];
+}
+
+class SuccessfulLoginState extends HomeState {
+  final String username;
+  SuccessfulLoginState(this.username);
+  @override
+  // TODO: implement props
+  List<Object> get props => [username];
 }
