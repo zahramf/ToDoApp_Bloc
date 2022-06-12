@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app_bloc/home/bloc/bloc/home_bloc.dart';
 import 'package:to_do_app_bloc/home/services/authentication.dart';
+import 'package:to_do_app_bloc/home/services/todo.dart';
+import 'package:to_do_app_bloc/todos/bloc/todos.dart';
 
 class LoginPage extends StatelessWidget {
   final usernameField = TextEditingController();
@@ -13,9 +15,16 @@ class LoginPage extends StatelessWidget {
         title: Text("Login to Todo App"),
       ),
       body: BlocProvider(
-        create: (context) =>
-            HomeBloc(RepositoryProvider.of<AuthenticationService>(context)),
-        child: BlocBuilder<HomeBloc, HomeState>(builder: (context, State) {
+        create: (context) => HomeBloc(
+          RepositoryProvider.of<AuthenticationService>(context),
+          RepositoryProvider.of<TodoService>(context),
+        )..add(RegisterServicesEvent()),
+        child: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
+          if (state is SuccessfulLoginState) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => TodosPage(username: "username")));
+          }
+        }, builder: (context, state) {
           if (State is HomeInitial) {
             return Column(
               children: [

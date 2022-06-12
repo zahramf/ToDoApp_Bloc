@@ -17,3 +17,9 @@ class SuccessfulLoginState extends HomeState {
   // TODO: implement props
   List<Object> get props => [username];
 }
+
+class RegisteringServicesState extends HomeState {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
