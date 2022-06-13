@@ -22,10 +22,22 @@ class LoginPage extends StatelessWidget {
         child: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
           if (state is SuccessfulLoginState) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => TodosPage(username: "username")));
+                builder: (context) => TodosPage(username: state.username)));
+          }
+
+          if (state is HomeInitial) {
+            if (state.error != null) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Error"),
+                  content: Text(state.error!),
+                ),
+              );
+            }
           }
         }, builder: (context, state) {
-          if (State is HomeInitial) {
+          if (state is HomeInitial) {
             return Column(
               children: [
                 TextField(
@@ -37,13 +49,25 @@ class LoginPage extends StatelessWidget {
                   decoration: InputDecoration(labelText: 'password'),
                   controller: passwordField,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<HomeBloc>(context).add(
-                      LoginEvent(usernameField.text, passwordField.text),
-                    );
-                  },
-                  child: Text("LogIn"),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<HomeBloc>(context).add(
+                          LoginEvent(usernameField.text, passwordField.text),
+                        );
+                      },
+                      child: Text("LogIn"),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context).add(
+                            RegisterAccountEvent(
+                                usernameField.text, passwordField.text),
+                          );
+                        },
+                        child: Text("Register"))
+                  ],
                 ),
               ],
             );

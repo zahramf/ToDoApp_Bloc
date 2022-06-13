@@ -15,7 +15,7 @@ class TodoService {
     await _tasks.add(Task("username2", "task122", false));
   }
 
-  Future<List<Task>> getTask(final String username) async {
+  List<Task> getTask(final String username) {
     final tasks = _tasks.values.where((element) => element.user == username);
 
     return tasks.toList();
