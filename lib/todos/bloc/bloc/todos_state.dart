@@ -12,9 +12,10 @@ class TodosInitial extends TodosState {
 
 class TodosLoadedState extends TodosState {
   final List<Task> tasks;
+  final String username;
 
-  TodosLoadedState(this.tasks);
+  TodosLoadedState(this.tasks, this.username);
   @override
   // TODO: implement props
-  List<Object> get props => [tasks];
+  List<Object> get props => [tasks, this.username];
 }
